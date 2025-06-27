@@ -3,7 +3,7 @@ package personaldata
 import "fmt"
 
 type Personal struct {
-	Name string
+	Name   string
 	Weight float64
 	Height float64
 }

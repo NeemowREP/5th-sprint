@@ -10,24 +10,25 @@ import (
 	"github.com/Yandex-Practicum/tracker/internal/personaldata"
 	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
 )
+
 type Training struct {
-	Steps int
+	Steps        int
 	TrainingType string
-	Duration time.Duration
+	Duration     time.Duration
 	personaldata.Personal
 }
 
 func (t *Training) Parse(datastring string) (err error) {
 
-// Парсим полученуую строку в слайс строк
+	// Парсим полученуую строку в слайс строк
 	sliceData := strings.Split(datastring, ",")
 
-// Проверка на количество данных
+	// Проверка на количество данных
 	if len(sliceData) != 3 {
 		return errors.New("incorrect number of elements")
 	}
-// Переводим тип данных (из стринг в инт), проверяем на ошибку и положительное значение
-// Присваиваем значение в структуру
+	// Переводим тип данных (из стринг в инт), проверяем на ошибку и положительное значение
+	// Присваиваем значение в структуру
 	steps, err := strconv.Atoi(sliceData[0])
 	if err != nil {
 		return err
@@ -36,14 +37,14 @@ func (t *Training) Parse(datastring string) (err error) {
 	}
 	t.Steps = steps
 
-// Проверяем на пустое значение типа тренировок, если все корректно, присваиваем значение в структуру
+	// Проверяем на пустое значение типа тренировок, если все корректно, присваиваем значение в структуру
 	trainingType := sliceData[1]
 	if trainingType == "" {
 		return errors.New("incorrect type of training")
 	}
 	t.TrainingType = trainingType
 
-// Проверяем корректность строки времени и присваиваем значение в структуру
+	// Проверяем корректность строки времени и присваиваем значение в структуру
 	duration, err := time.ParseDuration(sliceData[2])
 	if err != nil {
 		return err
@@ -53,8 +54,6 @@ func (t *Training) Parse(datastring string) (err error) {
 	t.Duration = duration
 	return nil
 }
-
-
 
 func (t Training) ActionInfo() (string, error) {
 
@@ -78,11 +77,11 @@ func (t Training) ActionInfo() (string, error) {
 	speed := spentenergy.MeanSpeed(t.Steps, t.Personal.Height, t.Duration)
 
 	text := fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
-	t.TrainingType,
-	t.Duration.Hours(),
-	distance,
-	speed,
-	calories)
+		t.TrainingType,
+		t.Duration.Hours(),
+		distance,
+		speed,
+		calories)
 
 	return text, nil
 }

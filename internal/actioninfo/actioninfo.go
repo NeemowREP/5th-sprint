@@ -13,11 +13,11 @@ func Info(dataset []string, dp DataParser) {
 			log.Printf("problems with parsing '%s' : %v", item, err)
 			continue
 		}
-	text, err := dp.ActionInfo()
-	if err != nil {
-		log.Printf("problems with taking info for '%s' : %v", item, err)
-		continue
-	}
-	log.Print(text)
+		text, err := dp.ActionInfo()
+		if err != nil {
+			log.Printf("problems with taking info for '%s' : %v", item, err)
+			continue
+		}
+		log.Print(text)
 	}
 }
